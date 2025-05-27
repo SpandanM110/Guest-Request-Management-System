@@ -25,12 +25,20 @@ async function bootstrap() {
   // Set global prefix
   app.setGlobalPrefix("api")
 
+  // For Vercel serverless
+  if (process.env.NODE_ENV === "production") {
+    await app.init()
+    return app
+  }
+
+  // For local development
   const port = process.env.PORT || 3000
   await app.listen(port)
   console.log(`Application is running on: http://localhost:${port}`)
+  return app
 }
 
-// For Vercel serverless
+// Export for Vercel
 export default bootstrap
 
 // For local development
