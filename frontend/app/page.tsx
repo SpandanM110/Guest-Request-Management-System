@@ -16,7 +16,7 @@ interface GuestRequest {
 }
 
 async function fetchRequests(): Promise<GuestRequest[]> {
-  const response = await fetch("http://localhost:3000/api/requests")
+  const response = await fetch("https://intern-task-pi.vercel.app/api/requests")
   if (!response.ok) {
     throw new Error("Failed to fetch requests")
   }
