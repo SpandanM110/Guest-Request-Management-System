@@ -5,10 +5,12 @@ import { AppModule } from "./app.module"
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  // Enable CORS for frontend integration
+  // Enable CORS for production domains
   app.enableCors({
-    origin: true,
+    origin: ["http://localhost:3001", "https://intern-task-3jof.vercel.app", "https://*.vercel.app"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 
   // Global validation pipe
@@ -28,7 +30,7 @@ async function bootstrap() {
   console.log(`Application is running on: http://localhost:${port}`)
 }
 
-// Export for Vercel
+// For Vercel serverless
 export default bootstrap
 
 // For local development
