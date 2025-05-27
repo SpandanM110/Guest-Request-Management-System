@@ -9,10 +9,13 @@ async function createApp() {
     app = await NestFactory.create(AppModule)
 
     app.enableCors({
-      origin: true,
+      origin: ["http://localhost:3001", "https://intern-task-3jof.vercel.app", "https://*.vercel.app"],
       credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
     })
 
+    app.setGlobalPrefix("api")
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,
@@ -20,8 +23,6 @@ async function createApp() {
         transform: true,
       }),
     )
-
-    app.setGlobalPrefix("api")
     await app.init()
   }
   return app
