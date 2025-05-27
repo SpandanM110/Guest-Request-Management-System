@@ -27,4 +27,11 @@ async function bootstrap() {
   await app.listen(port)
   console.log(`Application is running on: http://localhost:${port}`)
 }
-bootstrap()
+
+// Export for Vercel
+export default bootstrap
+
+// For local development
+if (require.main === module) {
+  bootstrap()
+}
