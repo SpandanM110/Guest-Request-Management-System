@@ -1,6 +1,6 @@
 {
 <<<<<<< HEAD
-  "name": "fresh-backend",
+  "name": "backend",
   "version": "1.0.0",
   "description": "Minimal API for guest requests",
   "main": "index.js",
