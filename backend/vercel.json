@@ -1,5 +1,6 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "public": true,
   "builds": [
     {
@@ -27,6 +28,17 @@
     {
       "src": "/api/(.*)",
       "dest": "/api/index.js"
+=======
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
+>>>>>>> fd620f0177a4813ca4d5c8caacafcc0a53c4bfbd
     }
   ]
 }

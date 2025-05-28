@@ -8,6 +8,7 @@ const prisma = new PrismaClient()
 
 app.use(json())
 
+<<<<<<< HEAD
 app.get("/api/requests", async (req, res) => {
   try {
     const requests = await prisma.requests.findMany({
@@ -41,6 +42,24 @@ app.post("/api/requests", async (req, res) => {
   } catch (error) {
     console.error("Error creating request:", error)
     return res.status(500).json({ error: "Failed to create request" })
+=======
+    app.enableCors({
+      origin: ["http://localhost:3001", "https://intern-task-3jof.vercel.app", "https://*.vercel.app"],
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+    })
+
+    app.setGlobalPrefix("api")
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    )
+    await app.init()
+>>>>>>> fd620f0177a4813ca4d5c8caacafcc0a53c4bfbd
   }
 })
 
