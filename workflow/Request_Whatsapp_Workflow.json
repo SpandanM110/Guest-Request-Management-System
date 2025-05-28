@@ -1,0 +1,155 @@
+{
+  "name": "Request-Whatsapp-Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -80
+      ],
+      "id": "6eaf7962-95be-4840-b59b-63f66fc648a3",
+      "name": "WhatsApp Trigger",
+      "webhookId": "a24eed8c-7998-40d3-bd5c-e2eca0614f17",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "E6ly10nMfDPZ7kkq",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "960f45e3-bbae-4cf3-bce9-5ae1dfc5f917",
+              "name": "guestPhone",
+              "value": "={{$json[\"messages\"][0][\"from\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "ecdac448-0da2-4707-ac0c-e30102fb091e",
+              "name": "requestText",
+              "value": "={{$json[\"messages\"][0][\"text\"][\"body\"]}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -100,
+        -80
+      ],
+      "id": "5f1c5927-e12e-4099-ad27-db0a0ca0e216",
+      "name": "Guest Data"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://backendtime-nd78l04tj-spandan-mukherjees-projects.vercel.app/api/requests",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"guestPhone\": \"{{$json[\"guestPhone\"]}}\",\n  \"requestText\": \"{{$json[\"requestText\"]}}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        120,
+        -80
+      ],
+      "id": "2726e386-2a57-4e9f-bcf1-15bb3424983c",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "687272454463483",
+        "recipientPhoneNumber": "={{ $json.guestPhone }}",
+        "textBody": "=Request received! Our staff will assist you soon.",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -100
+      ],
+      "id": "a2564548-3898-4b9f-8cf4-686f74354ee9",
+      "name": "WhatsApp Business Cloud",
+      "webhookId": "fb05d2b4-f90f-403f-9aec-9659264dc616",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "8s09ONEWmvA6572O",
+          "name": "WhatsApp account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Guest Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guest Data": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp Business Cloud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4980efc6-c2f1-457b-ae06-720bfdde92cd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7deccefa5b05cd591a5617f9c3f14555f32458fd79386d74502c7509c7d592c3"
+  },
+  "id": "ddzg7lmPHppIIKiW",
+  "tags": []
+}
