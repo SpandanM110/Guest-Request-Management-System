@@ -1,20 +1,32 @@
 {
   "version": 2,
+  "public": true,
   "builds": [
     {
-      "src": "src/main.ts",
+      "src": "api/*.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "src/main.ts"
+      "src": "/api/debug",
+      "dest": "/api/debug.js"
+    },
+    {
+      "src": "/api/simple-requests",
+      "dest": "/api/simple-requests.js"
+    },
+    {
+      "src": "/api/hello",
+      "dest": "/api/hello.js"
+    },
+    {
+      "src": "/api/requests",
+      "dest": "/api/requests.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
     }
-  ],
-  "functions": {
-    "src/main.ts": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }

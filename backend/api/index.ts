@@ -1,33 +1,47 @@
-import { NestFactory } from "@nestjs/core"
-import { ValidationPipe } from "@nestjs/common"
-import { AppModule } from "../src/app.module"
+// Simple Express handler without NestJS
+import express from "express"
+import { json } from "body-parser"
+import { PrismaClient } from "@prisma/client"
 
-let app: any
+const app = express()
+const prisma = new PrismaClient()
 
-async function createApp() {
-  if (!app) {
-    app = await NestFactory.create(AppModule)
+app.use(json())
 
-    app.enableCors({
-      origin: true,
-      credentials: true,
+app.get("/api/requests", async (req, res) => {
+  try {
+    const requests = await prisma.requests.findMany({
+      where: { status: "pending" },
+      orderBy: { createdAt: "desc" },
+    })
+    return res.json(requests)
+  } catch (error) {
+    console.error("Error fetching requests:", error)
+    return res.status(500).json({ error: "Failed to fetch requests" })
+  }
+})
+
+app.post("/api/requests", async (req, res) => {
+  try {
+    const { guestPhone, requestText } = req.body
+
+    if (!guestPhone || !requestText) {
+      return res.status(400).json({ error: "Phone and request text are required" })
+    }
+
+    const request = await prisma.requests.create({
+      data: {
+        guestPhone,
+        requestText,
+        status: "pending",
+      },
     })
 
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        transform: true,
-      }),
-    )
-
-    app.setGlobalPrefix("api")
-    await app.init()
+    return res.status(201).json(request)
+  } catch (error) {
+    console.error("Error creating request:", error)
+    return res.status(500).json({ error: "Failed to create request" })
   }
-  return app
-}
+})
 
-export default async function handler(req: any, res: any) {
-  const app = await createApp()
-  return app.getHttpAdapter().getInstance()(req, res)
-}
+export default app
