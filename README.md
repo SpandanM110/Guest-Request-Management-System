@@ -2,6 +2,10 @@
 
 A comprehensive full-stack WhatsApp-based guest request logging system. Features n8n.io workflow automation, NestJS backend, and Next.js dashboard with real-time request management capabilities.
 
+## License
+
+This project is licensed under the MIT License – see the [LICENSE](./LICENSE) file for details.
+
 
 ##  Features
 
