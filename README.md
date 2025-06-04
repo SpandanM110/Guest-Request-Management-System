@@ -1,6 +1,6 @@
-# GydeXP Guest Request Management System
+# Guest Request Management System
 
-A comprehensive full-stack WhatsApp-based guest request logging system built for Travel Studio's MVP. Features n8n.io workflow automation, NestJS backend, and Next.js dashboard with real-time request management capabilities.
+A comprehensive full-stack WhatsApp-based guest request logging system. Features n8n.io workflow automation, NestJS backend, and Next.js dashboard with real-time request management capabilities.
 
 
 ##  Features
@@ -415,7 +415,7 @@ Add in Vercel dashboard:
 
 
 3. **Custom Domain**
-Configure: `FullName_gydexp_intern_assignment.vercel.app`
+Configure: `'
 
 
 ### Backend Deployment (Vercel Serverless)
@@ -604,7 +604,7 @@ SELECT * FROM requests WHERE status = 'pending';
 
 ##  Acknowledgments
 
-- **Travel Studio (GydeXP)** for the task opportunity
+
 - **n8n.io** for powerful workflow automation
 - **WhatsApp Business API** for messaging integration
 - **NestJS** for the robust backend framework
@@ -613,7 +613,7 @@ SELECT * FROM requests WHERE status = 'pending';
 
 
 
-**Built with  for GydeXP Travel Studio**
+
 
 
 
